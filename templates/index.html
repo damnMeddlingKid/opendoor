@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/opendoor.css" rel="stylesheet">
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v2.2.0/mapbox.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox.js/v2.2.0/mapbox.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/template" id="cardTemplate">
+      <div class="container-fluid placard bg-primary" style="outline: 1px solid #2B547E;">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>{0}</h3>
+          <div class="row">
+            <div class="col-md-7">
+              <a href="#" class="thumbnail">
+                <img src="static/img/{1}.jpg" alt="..." >
+              </a>
+            </div>
+            <div class="col-md-5 lead">
+              <p>Pool : {2}</p>
+              <p>${3}</p>
+              <p><a class="btn btn-danger" href="#" role="button"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </script>
+
+    <script type="text/javascript">
+      String.prototype.format = function() {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+          return typeof args[number] != 'undefined'
+            ? args[number]
+            : match
+          ;
+        });
+      };
+
+      L.mapbox.accessToken = 'pk.eyJ1IjoiZnJhbmtseW5kIiwiYSI6IjVkYmE4ODZjZmZhYjAwMjIzYTQyODJlNDUyMzBmNDg1In0.zCgfCI4-UeJ48lFqIJ_J3g';
+      var map = null;
+      var myLayer = null;
+      var cardTemplate = null;
+
+      function randomImage() {
+        return "house"+Math.floor((Math.random() * (5 - 1) + 1));
+      }
+
+      function get_similar(lat,lon) {
+        $.get("/get_similar",{"lat":lat,"lon":lon}).done(function(data){
+          myLayer.setGeoJSON(data);
+          var features = data.features;
+          var template = "";
+          for(var i=0;i<features.length;i++) {
+            var dwelling_type = features[i].dwelling_type;
+            var pool = features[i].pool;
+            var list_price = features[i].list_price;
+
+            template += cardTemplate.format(dwelling_type,randomImage(),pool,list_price);
+          }
+          $("#listingContainer").html(template);
+        });
+      }
+
+      $(function(){
+        map = L.mapbox.map('map-two', 'franklynd.92689ca3').setView([33.486,-111.949], 10);
+        myLayer = L.mapbox.featureLayer().addTo(map);
+        cardTemplate = $("#cardTemplate").html();
+        get_similar(33.486,-111.949)
+        map.on("click",function(e){
+          get_similar(e.latlng.lat,e.latlng.lng);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-static-top" style="margin-bottom: 0;">
+      <div class="container">
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="#">Pool Types</a>
+            </li>
+            <li>
+              <a href="#">Apartment Type</a>
+            </li>
+            <li>
+              <a href="#">Square feet</a>
+            </li>
+          </ul>
+        </div>
+    </div>
+    </nav>
+    <div class="container-fluid" style="height:100%;">
+      <div class="row" style="height:100%;">
+        <div class="col-md-8 bg-primary" style="height:100%;padding-left:0px;">
+          <div id='map-two' class='map'> </div>
+        </div>
+        <div id="listingContainer" class="col-md-4 bg-success" style="height:100%;padding-left:0px;padding-right:0px;overflow-y:scroll;">
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

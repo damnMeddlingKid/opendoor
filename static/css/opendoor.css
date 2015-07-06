@@ -1,0 +1,33 @@
+html,body
+{
+  height: 100%;
+  overflow: hidden;
+}
+
+.body {
+    display: table;
+    background-color: green;
+    margin:0;
+    padding:0;
+}
+
+.map {
+  position:absolute;
+  top:0;
+  bottom:0; 
+  width:100%;
+}
+
+.left-side {
+    background-color: blue;
+    float: none;
+    display: table-cell;
+    border: 1px solid;
+}
+
+.right-side {
+    background-color: red;
+    float: none;
+    display: table-cell;
+    border: 1px solid;
+}
