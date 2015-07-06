@@ -1,10 +1,8 @@
 __author__ = 'Franklyn'
 
 from random import normalvariate, randint, randrange, sample
-from collections import namedtuple
 from datetime import date, timedelta
 from House import House
-from Model import Model
 
 NUM_LISTINGS = 10000
 
@@ -40,6 +38,8 @@ def random_date(start_date, end_date):
     return start_date + timedelta(days=randrange(delta.days))
 
 def generate_test_set():
+    """Tries to read the test set from disk and generates and stores it if no test set is available
+    """
     try:
         House.read_serialized_object("../static/data/house_listings")
     except Exception as e:
@@ -51,8 +51,9 @@ def generate_test_set():
 
 
 if __name__ == "__main__":
+    """Generate a random listing and benchmark how long the query takes
+    """
     import timeit
     generate_test_set()
     house = generate_datum()
     print timeit.timeit(lambda : house.get_similar(10),number=50)/50
-    #map_houses(houses)

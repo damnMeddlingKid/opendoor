@@ -1,11 +1,19 @@
 from flask import Flask, request, render_template, Response
 from geojson import Feature, Point, FeatureCollection
 import Test
-from House import House
-app = Flask(__name__,template_folder="../templates",static_folder="../static")
+
+"""Simple flask app to display listings on a map
+The dwelling type is hardcoded by the coordinates are passed in from the frontend.
+"""
+
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 @app.route("/get_similar", methods=['GET'])
 def get_similar():
+    """API endpoint to search for similar houses to a given location
+    :param lat,lon: Point on the map to search from of the search query
+    :return: GeoJSON encoded collection of locations near the query Point
+    """
     try:
         lat = float(request.args.get('lat', ''))
         lon = float(request.args.get('lon', ''))
