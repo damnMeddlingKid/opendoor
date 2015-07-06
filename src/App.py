@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, Response
 from geojson import Feature, Point, FeatureCollection
 import Test
 from House import House
-app = Flask(__name__)
+app = Flask(__name__,template_folder="../templates",static_folder="../static")
 
 @app.route("/get_similar", methods=['GET'])
 def get_similar():

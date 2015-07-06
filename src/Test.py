@@ -41,13 +41,13 @@ def random_date(start_date, end_date):
 
 def generate_test_set():
     try:
-        House.read_serialized_object("house_listings")
+        House.read_serialized_object("static/data/house_listings")
     except Exception as e:
-        print "No test data available, Generating dataset: {1}".format(e.message)
+        print "No test data available, Generating dataset: {0}".format(e.message)
         for k in range(0, NUM_LISTINGS):
             house = generate_datum()
             house.save()
-        House.write_serialized_object("house_listings")
+        House.write_serialized_object("static/data/house_listings")
 
 
 if __name__ == "__main__":
