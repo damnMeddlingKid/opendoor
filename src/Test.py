@@ -56,4 +56,5 @@ if __name__ == "__main__":
     import timeit
     generate_test_set()
     house = generate_datum()
+    print house.get_similar(10)
     print timeit.timeit(lambda : house.get_similar(10),number=50)/50
