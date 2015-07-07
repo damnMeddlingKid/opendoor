@@ -12,6 +12,7 @@ class House(Model):
 
     POOL_TYPES = {'private', 'community', 'none'}
 
+    """Weighting coefficient for the dwelling type similarity"""
     DWELLING_COEFFICIENT = 100
 
     Listing = namedtuple('Listing',
