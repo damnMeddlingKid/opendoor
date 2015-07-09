@@ -11,6 +11,9 @@ class Model(Series):
     Attributes:
         Objects: Store of model objects created from their respective class.
     """
+    def __init__(self, data, fields):
+        Series.__init__(self, data, index=fields)
+
     @classmethod
     def read_serialized_object(cls, path):
         try:
@@ -33,9 +36,6 @@ class Model(Series):
 
     def save(self):
         if self.__class__.Objects is None:
-            self.__class__.Objects = DataFrame(columns = self.index)
+            self.__class__.Objects = DataFrame(columns=self.index)
         self.__class__.Objects = self.__class__.Objects.append(self, ignore_index=True)
-
-    def __init__(self, data, fields):
-        Series.__init__(self, data, index=fields)
 
