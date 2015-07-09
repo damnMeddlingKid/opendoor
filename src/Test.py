@@ -56,5 +56,6 @@ if __name__ == "__main__":
     import timeit
     generate_test_set()
     house = generate_datum()
+    house['dwelling_type'] = 'single-family'
     print house.get_similar(10)
-    print timeit.timeit(lambda : house.get_similar(10),number=50)/50
+    #print timeit.timeit(lambda : house.get_similar(10),number=50)/50
