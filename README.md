@@ -1,4 +1,6 @@
-opendoor
+### OPENDOOR
+
+A simple Flask application that displays listings near a point where you've clicked.
 
 ========
 ### Dependencies (full list in requirements.txt)
