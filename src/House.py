@@ -15,7 +15,7 @@ class House(Model):
     # Weighting coefficient for the dwelling type similarity
     DWELLING_COEFFICIENT = 100
 
-    Listing = namedtuple('Listing',
+    listing = namedtuple('Listing',
                     ['num_bedrooms', 'num_bathrooms', 'living_area', 'lat', 'lon',
                      'exterior_stories', 'pool', 'dwelling_type',
                      'list_date', 'list_price', 'close_date', 'close_price'])
@@ -32,7 +32,7 @@ class House(Model):
         return similarity
 
     def __init__(self, listing):
-        Model.__init__(self, listing, House.Listing._fields)
+        super(House,self).__init__(self, listing, House.listing._fields)
 
     def get_similar(self, num_listings, similarity_callback=None):
         """Returns the n most smilar houses to this house.

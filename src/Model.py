@@ -12,7 +12,7 @@ class Model(Series):
         Objects: Store of model objects created from their respective class.
     """
     def __init__(self, data, fields):
-        Series.__init__(self, data, index=fields)
+        super(Model,self).__init__(self, data, index=fields)
 
     @classmethod
     def read_serialized_object(cls, path):
@@ -35,7 +35,7 @@ class Model(Series):
         return cls.Objects.ix[cls.Objects.apply(lambda x: sort_callback(x), axis=1).argsort()[:limit]]
 
     def save(self):
-        if self.__class__.Objects is None:
-            self.__class__.Objects = DataFrame(columns=self.index)
-        self.__class__.Objects = self.__class__.Objects.append(self, ignore_index=True)
+        if type(self).Objects is None:
+            type(self).Objects = DataFrame(columns=self.index)
+        type(self).Objects = type(self).Objects.append(self, ignore_index=True)
 
