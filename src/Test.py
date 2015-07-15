@@ -29,7 +29,7 @@ def generate_datum():
         close_date = None
         close_price = None
 
-    return House(House.Listing(num_bedrooms, num_bathrooms, living_area, lat, lon,exterior_stories, pool, dwelling_type,
+    return House(House.listing(num_bedrooms, num_bathrooms, living_area, lat, lon,exterior_stories, pool, dwelling_type,
                                list_date, list_price, close_date, close_price))
 
 def random_date(start_date, end_date):

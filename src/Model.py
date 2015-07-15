@@ -12,7 +12,7 @@ class Model(Series):
         Objects: Store of model objects created from their respective class.
     """
     def __init__(self, data, fields):
-        super(Model,self).__init__(self, data, index=fields)
+        super(Model,self).__init__(data, index=fields)
 
     @classmethod
     def read_serialized_object(cls, path):

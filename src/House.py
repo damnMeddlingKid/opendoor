@@ -32,7 +32,7 @@ class House(Model):
         return similarity
 
     def __init__(self, listing):
-        super(House,self).__init__(self, listing, House.listing._fields)
+        super(House, self).__init__(listing, House.listing._fields)
 
     def get_similar(self, num_listings, similarity_callback=None):
         """Returns the n most smilar houses to this house.
